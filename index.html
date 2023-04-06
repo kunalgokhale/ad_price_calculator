@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="styles.css" /> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,400;0,500;1,400;1,500&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <style>
+      * {
+        font-family: "Work Sans", sans-serif;
+      }
+
+      .flex {
+        display: flex;
+      }
+
+      .flex-col {
+        flex-direction: column;
+      }
+
+      .align-center {
+        align-items: center;
+      }
+
+      .justify-center {
+        justify-content: center;
+      }
+
+      hr {
+        border: 0;
+        clear: both;
+        display: block;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.1);
+        height: 1px;
+        margin: 0;
+      }
+
+      input[type="radio"]:checked + label {
+        background-color: #ebebf9;
+        border: 1px solid #000046;
+        color: #000046;
+      }
+
+      input[type="radio"] + label {
+        background-color: #fff;
+        border: 1px solid transparent;
+        color: #7d718a;
+      }
+
+      .pricingWrapper {
+        width: min(600px, 100%);
+      }
+
+      .priceCard {
+        padding: 1.5rem;
+        background: #ffffff;
+        box-shadow: 0px 0px 16px rgba(0, 0, 70, 0.1);
+        gap: 1.5rem;
+      }
+
+      .priceControls {
+        gap: 1.5rem;
+        width: 100%;
+      }
+
+      .controlContainer {
+        gap: 0.5rem;
+      }
+
+      .controlHeader {
+        color: rgba(26, 26, 40, 0.5);
+      }
+
+      .buttonGroup {
+        padding: 0.25rem;
+        border: 1px solid #c4c8d3;
+        border-radius: 0.5rem;
+      }
+
+      .radio {
+        display: none;
+      }
+
+      .radioOption {
+        height: 56px;
+        outline: none;
+        border-radius: 0.5rem;
+        border: none;
+        background-color: white;
+        flex: 1;
+        gap: 0.5rem;
+      }
+
+      .complexitySection {
+        width: 100%;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .complexityContainer {
+        width: 100%;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .complexity {
+        gap: 0.5rem;
+      }
+
+      .complexity .title.simple {
+        color: #77c5c5;
+      }
+
+      .complexity .title.moderate {
+        color: #589797;
+      }
+
+      .complexity .title.complex {
+        color: #456d6d;
+      }
+
+      .complexity .price {
+        color: #330b7e;
+        font-size: 1.25rem;
+        font-weight: 500;
+      }
+
+      .additionalInfo {
+        gap: 1rem;
+      }
+
+      .additionalInfo span {
+        width: 100%;
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.6);
+      }
+
+      .speed_icon {
+        height: 1.5rem;
+      }
+
+      .applicationTypeContainer {
+        background: #ffffff;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .applicationType {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        flex: 1;
+        box-shadow: 0px 0px 16px rgba(0, 0, 70, 0.1);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        gap: 0.25rem;
+      }
+
+      .applicationType_icon {
+        height: 1.5rem;
+        width: 1.5rem;
+      }
+
+      .applicationType_title {
+        font-size: 0.875rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="pricingWrapper">
+      <div class="applicationTypeContainer flex">
+        <div class="applicationType flex flex-col">
+          <img
+            class="applicationType_icon"
+            src="https://uploads-ssl.webflow.com/63d21acf4c047e6a405c5e1e/642db488d9658a25370d92a5_csd.png"
+            alt="Custom Software Development"
+          />
+          <span class="applicationType_title">Custom Software Development</span>
+        </div>
+        <div class="applicationType flex flex-col">
+          <img
+            class="applicationType_icon"
+            src="https://uploads-ssl.webflow.com/63d21acf4c047e6a405c5e1e/642db48fc38aa00112cd0ad1_wd.png"
+            alt="Custom Software Development"
+          />
+          <span class="applicationType_title">Web Design</span>
+        </div>
+        <div class="applicationType flex flex-col">
+          <img
+            class="applicationType_icon"
+            src="https://uploads-ssl.webflow.com/63d21acf4c047e6a405c5e1e/642db48a9875f293ff536f70_mad.png"
+            alt="Custom Software Development"
+          />
+          <span class="applicationType_title"
+            >Mobile Application Development</span
+          >
+        </div>
+      </div>
+      <div class="priceCard flex flex-col align-center justify-center">
+        <div class="priceControls flex flex-col">
+          <div class="controlContainer flex flex-col">
+            <span class="controlHeader">PROJECT SIZE</span>
+            <div class="buttonGroup flex">
+              <input
+                class="radio"
+                type="radio"
+                id="teamSize_low"
+                name="teamSize"
+                value="small"
+              />
+              <label
+                class="radioOption flex align-center justify-center"
+                for="teamSize_low"
+              >
+                <svg
+                  width="25"
+                  height="23"
+                  viewBox="0 0 25 23"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <mask id="path-1-inside-1_35_324" fill="white">
+                    <path
+                      d="M11.1957 21.0217C11.1957 21.574 10.747 22.0266 10.1971 21.975C9.13497 21.8754 8.09175 21.6173 7.10266 21.2076C5.805 20.6701 4.62592 19.8822 3.63274 18.8891C2.63955 17.8959 1.85172 16.7168 1.31421 15.4191C0.776704 14.1215 0.500053 12.7307 0.500053 11.3261C0.500053 9.92151 0.776704 8.53069 1.31421 7.23303C1.85172 5.93538 2.63955 4.7563 3.63274 3.76311C4.62592 2.76993 5.805 1.9821 7.10266 1.44459C8.09175 1.03489 9.13497 0.776747 10.1972 0.677146C10.747 0.625584 11.1957 1.07815 11.1957 1.63043L11.1957 11.3261L11.1957 21.0217Z"
+                    />
+                  </mask>
+                  <path
+                    d="M11.1957 21.0217C11.1957 21.574 10.747 22.0266 10.1971 21.975C9.13497 21.8754 8.09175 21.6173 7.10266 21.2076C5.805 20.6701 4.62592 19.8822 3.63274 18.8891C2.63955 17.8959 1.85172 16.7168 1.31421 15.4191C0.776704 14.1215 0.500053 12.7307 0.500053 11.3261C0.500053 9.92151 0.776704 8.53069 1.31421 7.23303C1.85172 5.93538 2.63955 4.7563 3.63274 3.76311C4.62592 2.76993 5.805 1.9821 7.10266 1.44459C8.09175 1.03489 9.13497 0.776747 10.1972 0.677146C10.747 0.625584 11.1957 1.07815 11.1957 1.63043L11.1957 11.3261L11.1957 21.0217Z"
+                    fill="white"
+                    stroke="black"
+                    stroke-width="2"
+                    mask="url(#path-1-inside-1_35_324)"
+                  />
+                  <path
+                    d="M13.1087 1.10869C13.1087 0.556404 13.5574 0.104125 14.1075 0.15253C16.7626 0.386134 19.264 1.54554 21.1636 3.44512C23.2999 5.58141 24.5 8.47883 24.5 11.5C24.5 14.5212 23.2999 17.4186 21.1636 19.5549C19.264 21.4544 16.7626 22.6138 14.1075 22.8475C13.5574 22.8959 13.1087 22.4436 13.1087 21.8913L13.1087 11.5L13.1087 1.10869Z"
+                    fill="#000046"
+                  />
+                </svg>
+
+                <span>Low</span></label
+              >
+              <input
+                class="radio"
+                type="radio"
+                id="teamSize_med"
+                name="teamSize"
+                value="medium"
+              />
+              <label
+                class="radioOption flex align-center justify-center"
+                for="teamSize_med"
+              >
+                <svg
+                  width="25"
+                  height="25"
+                  viewBox="0 0 25 25"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <mask id="path-1-inside-1_35_329" fill="white">
+                    <path
+                      d="M1.50004 11.3613C0.947757 11.3613 0.495229 10.9126 0.546418 10.3627C0.646249 9.2903 0.90652 8.23696 1.32014 7.23839C1.86157 5.93126 2.65516 4.74358 3.65559 3.74314C4.65602 2.74271 5.84371 1.94912 7.15084 1.40769C8.14941 0.994073 9.20275 0.7338 10.2752 0.633969C10.8251 0.582782 11.2738 1.03531 11.2738 1.58759L11.2738 10.3613C11.2738 10.9136 10.826 11.3613 10.2738 11.3613L1.50004 11.3613Z"
+                    />
+                  </mask>
+                  <path
+                    d="M1.50004 11.3613C0.947757 11.3613 0.495229 10.9126 0.546418 10.3627C0.646249 9.2903 0.90652 8.23696 1.32014 7.23839C1.86157 5.93126 2.65516 4.74358 3.65559 3.74314C4.65602 2.74271 5.84371 1.94912 7.15084 1.40769C8.14941 0.994073 9.20275 0.7338 10.2752 0.633969C10.8251 0.582782 11.2738 1.03531 11.2738 1.58759L11.2738 10.3613C11.2738 10.9136 10.826 11.3613 10.2738 11.3613L1.50004 11.3613Z"
+                    fill="white"
+                    stroke="black"
+                    stroke-width="2"
+                    mask="url(#path-1-inside-1_35_329)"
+                  />
+                  <path
+                    d="M13.0256 2.46351C13.0256 1.91122 13.4742 1.45898 14.0244 1.50705C15.9415 1.67455 17.7915 2.32222 19.4005 3.3973C21.2874 4.65813 22.7581 6.4502 23.6266 8.54688C24.4951 10.6436 24.7223 12.9507 24.2796 15.1765C23.8368 17.4023 22.744 19.4469 21.1393 21.0516C19.5345 22.6564 17.49 23.7492 15.2642 24.1919C13.0383 24.6347 10.7312 24.4074 8.63452 23.539C6.53784 22.6705 4.74577 21.1998 3.48494 19.3128C2.40985 17.7038 1.76219 15.8538 1.59469 13.9367C1.54662 13.3865 1.99886 12.938 2.55115 12.938L12.0256 12.938C12.5779 12.938 13.0256 12.4902 13.0256 11.938L13.0256 2.46351Z"
+                    fill="#000046"
+                  />
+                </svg>
+
+                <span>Medium</span></label
+              >
+              <input
+                class="radio"
+                type="radio"
+                id="teamSize_high"
+                name="teamSize"
+                value="large"
+              />
+              <label
+                class="radioOption flex align-center justify-center"
+                for="teamSize_high"
+                ><svg
+                  width="25"
+                  height="25"
+                  viewBox="0 0 25 25"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="12.5"
+                    cy="12.5"
+                    r="12"
+                    transform="rotate(-90 12.5 12.5)"
+                    fill="#000046"
+                  />
+                </svg>
+                <span>High</span></label
+              >
+            </div>
+          </div>
+          <div class="controlContainer flex flex-col">
+            <span class="controlHeader">SPEED</span>
+            <div class="buttonGroup flex">
+              <input
+                class="radio"
+                type="radio"
+                id="projectSpeed_low"
+                name="projectSpeed"
+                value="<3months"
+              />
+              <label
+                class="radioOption flex align-center justify-center"
+                for="projectSpeed_low"
+              >
+                <img
+                  class="speed_icon"
+                  src="https://uploads-ssl.webflow.com/63d21acf4c047e6a405c5e1e/642db48b7bd28e3bf3ccdc5c_speed_3months.png"
+                  alt="Less than 3 months"
+                />
+                <span>< 3 months</span></label
+              >
+              <input
+                class="radio"
+                type="radio"
+                id="projectSpeed_med"
+                name="projectSpeed"
+                value="3-6months"
+              />
+              <label
+                class="radioOption flex align-center justify-center"
+                for="projectSpeed_med"
+              >
+                <img
+                  class="speed_icon"
+                  src="https://uploads-ssl.webflow.com/63d21acf4c047e6a405c5e1e/642db48a2d4976b3d0e12d74_speed_3-6months.png"
+                  alt="3 to 6 months"
+                />
+                <span>3 - 6 months</span></label
+              >
+              <input
+                class="radio"
+                type="radio"
+                id="projectSpeed_high"
+                name="projectSpeed"
+                value=">6months"
+              />
+              <label
+                class="radioOption flex align-center justify-center"
+                for="projectSpeed_high"
+              >
+                <img
+                  class="speed_icon"
+                  src="https://uploads-ssl.webflow.com/63d21acf4c047e6a405c5e1e/642db48a639ce31aa1415c8d_speed_6months.png"
+                  alt="More than 6 months"
+                />
+                <span>> 6 months</span></label
+              >
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="complexitySection flex flex-col">
+          <span class="controlHeader">PROJECT COMPLEXITY</span>
+          <div class="complexityContainer flex">
+            <div class="complexity flex flex-col">
+              <span class="title simple">SIMPLE</span>
+              <span class="price"
+                >€ <span class="min" id="simple-min-price"></span> ~ €
+                <span class="max" id="simple-max-price"></span
+              ></span>
+            </div>
+            <div class="complexity flex flex-col">
+              <span class="title moderate">MODERATE</span>
+              <span class="price"
+                >€ <span class="min" id="moderate-min-price"></span> ~ €
+                <span class="max" id="moderate-max-price"></span
+              ></span>
+            </div>
+            <div class="complexity flex flex-col">
+              <span class="title complex">COMPLEX</span>
+              <span class="price"
+                >€ <span class="min" id="complex-min-price"></span> ~ €
+                <span class="max" id="complex-max-price"></span
+              ></span>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="additionalInfo flex flex-col">
+          <span
+            >Complexity of the project is based on the requirements of the
+            project.</span
+          >
+          <span
+            >Final pricing will be determined after a detailed analysis and
+            agreement on the project requirements with the client.</span
+          >
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // define the cost ranges based on project size and speed
+      const costRanges = {
+        small: {
+          "<3months": {
+            simple: { min: "29k", max: "74k" },
+            moderate: { min: "49k", max: "123k" },
+            complex: { min: "74k", max: "184k" },
+          },
+          "3-6months": {
+            simple: { min: "26k", max: "67k" },
+            moderate: { min: "45k", max: "110k" },
+            complex: { min: "67k", max: "166k" },
+          },
+          ">6months": {
+            simple: { min: "22k", max: "55k" },
+            moderate: { min: "37k", max: "92k" },
+            complex: { min: "55k", max: "138k" },
+          },
+        },
+        medium: {
+          "<3months": {
+            simple: { min: "49k", max: "123k" },
+            moderate: { min: "83k", max: "201k" },
+            complex: { min: "123k", max: "308k" },
+          },
+          "3-6months": {
+            simple: { min: "45k", max: "110k" },
+            moderate: { min: "75k", max: "188k" },
+            complex: { min: "110k", max: "277k" },
+          },
+          ">6months": {
+            simple: { min: "37k", max: "92k" },
+            moderate: { min: "62k", max: "157k" },
+            complex: { min: "92k", max: "231k" },
+          },
+        },
+        large: {
+          "<3months": {
+            simple: { min: "74k", max: "184k" },
+            moderate: { min: "128k", max: "320k" },
+            complex: { min: "182k", max: "455k" },
+          },
+          "3-6months": {
+            simple: { min: "72k", max: "180k" },
+            moderate: { min: "115k", max: "288k" },
+            complex: { min: "164k", max: "410k" },
+          },
+          ">6months": {
+            simple: { min: "55k", max: "139k" },
+            moderate: { min: "96k", max: "240k" },
+            complex: { min: "136k", max: "341k" },
+          },
+        },
+      };
+
+      $(document).ready(function () {
+        $("input[name='projectSpeed']").change(function () {
+          var sizeSelect = $("input[name='teamSize']:checked").val();
+          var speedSelect = $("input[name='projectSpeed']:checked").val();
+          var costRange = costRanges[sizeSelect][speedSelect];
+
+          $("#simple-min-price").html(costRange.simple.min);
+          $("#simple-max-price").html(costRange.simple.max);
+          $("#moderate-min-price").html(costRange.moderate.min);
+          $("#moderate-max-price").html(costRange.moderate.max);
+          $("#complex-min-price").html(costRange.complex.min);
+          $("#complex-max-price").html(costRange.complex.max);
+        });
+
+        $("input[name='teamSize']").change(function () {
+          var sizeSelect = $("input[name='teamSize']:checked").val();
+          var speedSelect = $("input[name='projectSpeed']:checked").val();
+          var costRange = costRanges[sizeSelect][speedSelect];
+
+          $("#simple-min-price").html(costRange.simple.min);
+          $("#simple-max-price").html(costRange.simple.max);
+          $("#moderate-min-price").html(costRange.moderate.min);
+          $("#moderate-max-price").html(costRange.moderate.max);
+          $("#complex-min-price").html(costRange.complex.min);
+          $("#complex-max-price").html(costRange.complex.max);
+        });
+
+        // $("input[name='teamSize']").prop("checked", true).trigger("click");
+        // $("input[name='projectSpeed']").prop("checked", true).trigger("click");
+      });
+    </script>
+  </body>
+</html>
