@@ -57,7 +57,7 @@
       }
 
       .pricingWrapper {
-        width: min(600px, 100%);
+        width: 100%;
       }
 
       .priceCard {
@@ -175,6 +175,10 @@
       }
 
       @media only screen and (max-width: 500px) {
+        .pricingWrapper {
+          min-height: 890px;
+        }
+
         .applicationTypeContainer {
           flex-direction: column;
         }
@@ -189,6 +193,10 @@
       }
 
       @media only screen and (max-width: 440px) {
+        .pricingWrapper {
+          min-height: 1295px;
+        }
+
         .buttonGroup {
           flex-direction: column;
           padding: 1rem;
