@@ -52,7 +52,7 @@
 
       input[type="radio"] + label {
         background-color: #fff;
-        border: 1px solid transparent;
+        border: 2px solid transparent;
         color: #7d718a;
       }
 
@@ -163,8 +163,15 @@
         padding: 1.5rem;
         border-radius: 0.5rem;
         gap: 0.25rem;
-        border: none;
         background: white;
+        border: 2px solid transparent;
+      }
+
+      .applicationType:hover,
+      input[type="radio"] + label:hover {
+        border: 2px solid #000046;
+        box-shadow: 0px 0px 16px rgba(0, 0, 70, 0.25);
+        transition: all ease-in-out 500ms;
       }
 
       .applicationType.active {
@@ -537,53 +544,53 @@
       const costRangesWd = {
         small: {
           "<3months": {
-            simple: { min: "5k", max: "15k" },
-            moderate: { min: "5k", max: "15k" },
-            complex: { min: "5k", max: "15k" },
+            simple: { min: "5k", max: "7k" },
+            moderate: { min: "7k", max: "9k" },
+            complex: { min: "9k", max: "11k" },
           },
           "3-6months": {
-            simple: { min: "5k", max: "15k" },
-            moderate: { min: "5k", max: "15k" },
-            complex: { min: "5k", max: "15k" },
+            simple: { min: "6k", max: "8k" },
+            moderate: { min: "8k", max: "10k" },
+            complex: { min: "10k", max: "12k" },
           },
           ">6months": {
-            simple: { min: "5k", max: "15k" },
-            moderate: { min: "5k", max: "15k" },
-            complex: { min: "5k", max: "15k" },
+            simple: { min: "7k", max: "9k" },
+            moderate: { min: "9k", max: "11k" },
+            complex: { min: "11k", max: "13k" },
           },
         },
         medium: {
           "<3months": {
-            simple: { min: "5k", max: "15k" },
-            moderate: { min: "5k", max: "15k" },
-            complex: { min: "5k", max: "15k" },
+            simple: { min: "7k", max: "9k" },
+            moderate: { min: "10k", max: "12k" },
+            complex: { min: "12k", max: "14k" },
           },
           "3-6months": {
-            simple: { min: "5k", max: "15k" },
-            moderate: { min: "5k", max: "15k" },
-            complex: { min: "5k", max: "15k" },
+            simple: { min: "8k", max: "10k" },
+            moderate: { min: "11k", max: "13k" },
+            complex: { min: "13k", max: "15k" },
           },
           ">6months": {
-            simple: { min: "5k", max: "15k" },
-            moderate: { min: "5k", max: "15k" },
-            complex: { min: "5k", max: "15k" },
+            simple: { min: "9k", max: "11k" },
+            moderate: { min: "12k", max: "14k" },
+            complex: { min: "14k", max: "15k" },
           },
         },
         large: {
           "<3months": {
-            simple: { min: "5k", max: "15k" },
-            moderate: { min: "5k", max: "15k" },
-            complex: { min: "5k", max: "15k" },
+            simple: { min: "9k", max: "11k" },
+            moderate: { min: "13k", max: "14k" },
+            complex: { min: "14k", max: "15k" },
           },
           "3-6months": {
-            simple: { min: "5k", max: "15k" },
-            moderate: { min: "5k", max: "15k" },
-            complex: { min: "5k", max: "15k" },
+            simple: { min: "9k", max: "11k" },
+            moderate: { min: "12k", max: "14k" },
+            complex: { min: "14k", max: "15k" },
           },
           ">6months": {
-            simple: { min: "5k", max: "15k" },
-            moderate: { min: "5k", max: "15k" },
-            complex: { min: "5k", max: "15k" },
+            simple: { min: "11k", max: "13k" },
+            moderate: { min: "13k", max: "15k" },
+            complex: { min: "14k", max: "15k" },
           },
         },
       };
@@ -608,7 +615,7 @@
         $("input[name='teamSize']").change(function () {
           var sizeSelect = $("input[name='teamSize']:checked").val();
           var speedSelect = $("input[name='projectSpeed']:checked").val();
-          var costRange = costRanges[sizeSelect][speedSelect];
+          var costRange = chosenCostRange[sizeSelect][speedSelect];
 
           $("#simple-min-price").html(costRange.simple.min);
           $("#simple-max-price").html(costRange.simple.max);
@@ -662,6 +669,13 @@
             categories[i].classList.remove("active");
           }
         }
+
+        $("#simple-min-price").html("");
+        $("#simple-max-price").html("");
+        $("#moderate-min-price").html("");
+        $("#moderate-max-price").html("");
+        $("#complex-min-price").html("");
+        $("#complex-max-price").html("");
       }
     </script>
   </body>
