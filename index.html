@@ -163,6 +163,14 @@
         padding: 1.5rem;
         border-radius: 0.5rem;
         gap: 0.25rem;
+        border: none;
+        background: white;
+      }
+
+      .applicationType.active {
+        background-color: #ebebf9;
+        border: 2px solid #000046;
+        color: #000046;
       }
 
       .applicationType_icon {
@@ -217,23 +225,35 @@
   <body>
     <main class="pricingWrapper">
       <div class="applicationTypeContainer flex">
-        <div class="applicationType flex flex-col">
+        <button
+          class="applicationType flex flex-col"
+          onclick="setCategory('CSD')"
+          id="csd"
+        >
           <img
             class="applicationType_icon"
             src="https://uploads-ssl.webflow.com/63d21acf4c047e6a405c5e1e/642db488d9658a25370d92a5_csd.png"
             alt="Custom Software Development"
           />
           <span class="applicationType_title">Custom Software Development</span>
-        </div>
-        <div class="applicationType flex flex-col">
+        </button>
+        <button
+          class="applicationType flex flex-col"
+          onclick="setCategory('WD')"
+          id="wd"
+        >
           <img
             class="applicationType_icon"
             src="https://uploads-ssl.webflow.com/63d21acf4c047e6a405c5e1e/642db48fc38aa00112cd0ad1_wd.png"
             alt="Custom Software Development"
           />
           <span class="applicationType_title">Web Design</span>
-        </div>
-        <div class="applicationType flex flex-col">
+        </button>
+        <button
+          class="applicationType flex flex-col"
+          onclick="setCategory('MAD')"
+          id="mad"
+        >
           <img
             class="applicationType_icon"
             src="https://uploads-ssl.webflow.com/63d21acf4c047e6a405c5e1e/642db48a9875f293ff536f70_mad.png"
@@ -242,7 +262,7 @@
           <span class="applicationType_title"
             >Mobile Application Development</span
           >
-        </div>
+        </button>
       </div>
       <div class="priceCard flex flex-col align-center justify-center">
         <div class="priceControls flex flex-col">
@@ -356,7 +376,7 @@
           </div>
           <div class="controlContainer flex flex-col">
             <span class="controlHeader">SPEED</span>
-            <div class="speedButtons buttonGroup flex">
+            <div id="nonWdTimeFrames" class="speedButtons buttonGroup flex">
               <input
                 class="radio"
                 type="radio"
@@ -373,7 +393,7 @@
                   src="https://uploads-ssl.webflow.com/63d21acf4c047e6a405c5e1e/642db48b7bd28e3bf3ccdc5c_speed_3months.png"
                   alt="Less than 3 months"
                 />
-                <span>< 3 months</span></label
+                <span id="projectSpeed_low_label">< 3 months</span></label
               >
               <input
                 class="radio"
@@ -391,7 +411,7 @@
                   src="https://uploads-ssl.webflow.com/63d21acf4c047e6a405c5e1e/642db48a2d4976b3d0e12d74_speed_3-6months.png"
                   alt="3 to 6 months"
                 />
-                <span>3 - 6 months</span></label
+                <span id="projectSpeed_medium_label">3 - 6 months</span></label
               >
               <input
                 class="radio"
@@ -409,7 +429,7 @@
                   src="https://uploads-ssl.webflow.com/63d21acf4c047e6a405c5e1e/642db48a639ce31aa1415c8d_speed_6months.png"
                   alt="More than 6 months"
                 />
-                <span>> 6 months</span></label
+                <span id="projectSpeed_high_label">> 6 months</span></label
               >
             </div>
           </div>
@@ -456,6 +476,9 @@
     </main>
 
     <script>
+      var category = "CSD";
+      var chosenCostRange;
+
       // define the cost ranges based on project size and speed
       const costRanges = {
         small: {
@@ -511,11 +534,68 @@
         },
       };
 
+      const costRangesWd = {
+        small: {
+          "<3months": {
+            simple: { min: "2k", max: "74k" },
+            moderate: { min: "49k", max: "123k" },
+            complex: { min: "74k", max: "184k" },
+          },
+          "3-6months": {
+            simple: { min: "26k", max: "67k" },
+            moderate: { min: "45k", max: "110k" },
+            complex: { min: "67k", max: "166k" },
+          },
+          ">6months": {
+            simple: { min: "22k", max: "55k" },
+            moderate: { min: "37k", max: "92k" },
+            complex: { min: "55k", max: "138k" },
+          },
+        },
+        medium: {
+          "<3months": {
+            simple: { min: "49k", max: "123k" },
+            moderate: { min: "83k", max: "201k" },
+            complex: { min: "123k", max: "308k" },
+          },
+          "3-6months": {
+            simple: { min: "45k", max: "110k" },
+            moderate: { min: "75k", max: "188k" },
+            complex: { min: "110k", max: "277k" },
+          },
+          ">6months": {
+            simple: { min: "37k", max: "92k" },
+            moderate: { min: "62k", max: "157k" },
+            complex: { min: "92k", max: "231k" },
+          },
+        },
+        large: {
+          "<3months": {
+            simple: { min: "74k", max: "184k" },
+            moderate: { min: "128k", max: "320k" },
+            complex: { min: "182k", max: "15k" },
+          },
+          "3-6months": {
+            simple: { min: "72k", max: "180k" },
+            moderate: { min: "115k", max: "288k" },
+            complex: { min: "164k", max: "410k" },
+          },
+          ">6months": {
+            simple: { min: "55k", max: "139k" },
+            moderate: { min: "96k", max: "240k" },
+            complex: { min: "136k", max: "341k" },
+          },
+        },
+      };
+
       $(document).ready(function () {
+        // set default category to CSD onload
+        setCategory(category);
+
         $("input[name='projectSpeed']").change(function () {
           var sizeSelect = $("input[name='teamSize']:checked").val();
           var speedSelect = $("input[name='projectSpeed']:checked").val();
-          var costRange = costRanges[sizeSelect][speedSelect];
+          var costRange = chosenCostRange[sizeSelect][speedSelect];
 
           $("#simple-min-price").html(costRange.simple.min);
           $("#simple-max-price").html(costRange.simple.max);
@@ -541,6 +621,48 @@
         // $("input[name='teamSize']").prop("checked", true).trigger("click");
         // $("input[name='projectSpeed']").prop("checked", true).trigger("click");
       });
+
+      function setCategory(cat) {
+        category = cat;
+
+        var projectSpeed_low_label = document.getElementById(
+          "projectSpeed_low_label"
+        );
+        var projectSpeed_medium_label = document.getElementById(
+          "projectSpeed_medium_label"
+        );
+
+        var projectSpeed_high_label = document.getElementById(
+          "projectSpeed_high_label"
+        );
+
+        if (category.toUpperCase() === "WD") {
+          projectSpeed_low_label.innerHTML = "< 4 weeks";
+          projectSpeed_medium_label.innerHTML = "4 - 8 weeks";
+          projectSpeed_high_label.innerHTML = "> 8 weeks";
+          chosenCostRange = costRangesWd;
+        } else {
+          projectSpeed_low_label.innerHTML = "< 3 months";
+          projectSpeed_medium_label.innerHTML = "3 - 6 months";
+          projectSpeed_high_label.innerHTML = "> 6 months";
+          chosenCostRange = costRanges;
+        }
+
+        var ele = document.getElementsByName("teamSize");
+        for (var i = 0; i < ele.length; i++) ele[i].checked = false;
+
+        var ele = document.getElementsByName("projectSpeed");
+        for (var i = 0; i < ele.length; i++) ele[i].checked = false;
+
+        var categories = document.getElementsByClassName("applicationType");
+        for (var i = 0; i < categories.length; i++) {
+          if (categories[i].id.toUpperCase() === category) {
+            categories[i].classList.add("active");
+          } else {
+            categories[i].classList.remove("active");
+          }
+        }
+      }
     </script>
   </body>
 </html>
